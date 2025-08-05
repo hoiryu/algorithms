@@ -30,43 +30,36 @@
  */
 export default function solution(n, m, arr) {
 	let answer = 0;
+	const graph = Array.from({ length: n + 1 }, () => []);
+	const checks = Array(n + 1).fill(0);
+	const t = [];
+
+	for (let [r, c] of arr) graph[r].push(c);
+	console.log(graph);
+
+	function dfs(l) {
+		if (l === n) {
+			answer++;
+			console.log([...t]);
+			return;
+		}
+
+		for (let i = 0; i < graph[l].length; i++) {
+			const v = graph[l][i];
+			if (checks[v] === 1) continue;
+
+			checks[v] = 1;
+			t.push(v);
+			dfs(v);
+			checks[v] = 0;
+			t.pop();
+		}
+	}
+
+	checks[1] = 1;
+	t.push(1);
+
+	dfs(1);
 
 	return answer;
 }
-
-// export default function solution(n, m, arr) {
-// 	let answer = 0;
-// 	const graph = Array.from({ length: n + 1 }, () => Array());
-// 	const checks = Array(n + 1).fill(0);
-// 	const t = [];
-
-// 	for (let [r, c] of arr) {
-// 		graph[r].push(c);
-// 	}
-
-// 	function dfs(l) {
-// 		if (l === n) {
-// 			console.log(t);
-// 			answer++;
-// 			return;
-// 		}
-
-// 		for (let i = 0; i < graph[l].length; i++) {
-// 			const v = graph[l][i];
-
-// 			if (checks[v] === 1) continue;
-
-// 			checks[v] = 1;
-// 			t.push(v);
-// 			dfs(v);
-// 			checks[v] = 0;
-// 			t.pop();
-// 		}
-// 	}
-
-// 	t.push(1);
-// 	checks[1] = 1;
-// 	dfs(1);
-
-// 	return answer;
-// }
