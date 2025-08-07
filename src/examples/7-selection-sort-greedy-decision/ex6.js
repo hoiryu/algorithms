@@ -35,23 +35,3 @@ export default function solution(n, arr) {
 	for (let i = 0; i < n; i++) if (arr[i] !== sortedArr[i]) answer.push(i + 1);
 	return answer;
 }
-
-// export default function solution(n, arr) {
-// 	let answer = [];
-
-// 	for (let i = 0; i < n - 1; i++) {
-// 		if (arr[i] >= arr[i + 1]) {
-// 			answer.push(i + 1);
-
-// 			for (let j = n - 1; j > i; j--) {
-// 				if (arr[j] <= arr[j - 1]) {
-// 					answer.push(j + 1);
-// 					break;
-// 				}
-// 			}
-// 			break;
-// 		}
-// 	}
-
-// 	return answer;
-// }

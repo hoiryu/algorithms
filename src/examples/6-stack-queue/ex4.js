@@ -15,35 +15,33 @@
 export default function solution(str) {
 	let answer = 0;
 	const stack = [];
-	str = str.replace(/\s/g, '');
 
 	for (let s of str) {
-		const convert = Number(s);
-		if (!Number.isNaN(convert)) {
-			stack.push(convert);
+		const t = Number(s);
+		if (!Number.isNaN(t)) {
+			stack.push(t);
 			continue;
 		}
 
-		const p1 = stack.pop();
-		const p2 = stack.pop();
+		const s1 = stack.pop();
+		const s2 = stack.pop();
 
 		switch (s) {
 			case '+':
-				stack.push(p2 + p1);
+				stack.push(s2 + s1);
 				break;
 			case '-':
-				stack.push(p2 - p1);
+				stack.push(s2 - s1);
 				break;
 			case '*':
-				stack.push(p2 * p1);
+				stack.push(s2 * s1);
 				break;
 			case '/':
-				stack.push(p2 / p1);
+				stack.push(s2 / s1);
 				break;
 			default:
 		}
 	}
-
-	answer = stack[0];
+	answer = stack.pop();
 	return answer;
 }

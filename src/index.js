@@ -1,19 +1,8 @@
-import solution from './examples/9-graph-dfs-bfs/ex2.js';
+import solution from './examples/9-graph-dfs-bfs/ex5.js';
 
 console.time('걸린 시간');
-console.log(
-	solution(5, 9, [
-		[1, 2],
-		[1, 3],
-		[1, 4],
-		[2, 1],
-		[2, 3],
-		[2, 5],
-		[3, 4],
-		[4, 2],
-		[4, 5],
-	]),
-);
+console.log(solution(5, 14));
+console.log(solution(8, 3));
 console.timeEnd('걸린 시간');
 
 /**
@@ -43,4 +32,9 @@ console.timeEnd('걸린 시간');
  * 1 2
  * 1 3
  * 2 3
+ *
+ * DFS (Depth-First-Search): 깊이 우선 탐색
+ * 깊은 Node 부터 탐색
+ * BFS (Breadth-First-Search): 넓이 우선 탐색
+ * 최단 거리 탐색
  */

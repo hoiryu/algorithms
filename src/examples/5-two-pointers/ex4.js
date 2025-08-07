@@ -18,11 +18,10 @@
  * ▣ 출력예제 1
  * 10
  */
-export default function solution(m, arr) {
+export default function solution(n, m, arr) {
 	let answer = 0,
 		p1 = 0,
 		sum = 0;
-	const n = arr.length;
 
 	for (let p2 = 0; p2 < n; p2++) {
 		sum += arr[p2];

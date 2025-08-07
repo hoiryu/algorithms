@@ -28,13 +28,13 @@
  * 7
  */
 export default function solution(n, k) {
-	let answer = 0;
-	let queue = Array.from({ length: n }).map((_, index) => index + 1);
-
+	let answer;
+	let queue = Array.from({ length: n }, (v, k) => k + 1);
 	while (queue.length) {
 		for (let i = 0; i < k - 1; i++) queue.push(queue.shift());
 		queue.shift();
 		if (queue.length === 1) answer = queue.shift();
 	}
+
 	return answer;
 }

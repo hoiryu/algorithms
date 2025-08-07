@@ -45,7 +45,7 @@ export default function solution(str) {
 			stack.pop();
 
 			if (str[i - 1] === ')') {
-				answer += 1;
+				answer++;
 				continue;
 			}
 

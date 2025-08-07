@@ -12,19 +12,36 @@
  * NO
  */
 export default function solution(str) {
-	let answer = 'YES',
-		stack = [];
+	let answer = 'YES';
+	const stack = [];
 
 	for (let s of str) {
-		if (s === '(') {
-			stack.push(s);
-		} else {
-			if (stack.length === 0) return 'NO';
-			stack.pop();
+		if (s === '(') stack.push(s);
+		else if (!stack.pop()) {
+			answer = 'NO';
+			break;
 		}
 	}
 
-	if (stack.length !== 0) return 'NO';
+	if (stack.length > 0) answer = 'NO';
 
 	return answer;
 }
+
+// export default function solution(str) {
+// 	let answer = 'YES',
+// 		stack = [];
+
+// 	for (let s of str) {
+// 		if (s === '(') {
+// 			stack.push(s);
+// 		} else {
+// 			if (stack.length === 0) return 'NO';
+// 			stack.pop();
+// 		}
+// 	}
+
+// 	if (stack.length !== 0) return 'NO';
+
+// 	return answer;
+// }
