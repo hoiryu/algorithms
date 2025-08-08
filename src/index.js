@@ -1,8 +1,7 @@
-import solution from './examples/9-graph-dfs-bfs/ex5.js';
+import solution from './examples/10-dynamic-programming/ex3.js';
 
 console.time('걸린 시간');
-console.log(solution(5, 14));
-console.log(solution(8, 3));
+console.log(solution(8, [5, 3, 7, 8, 6, 2, 9, 4]));
 console.timeEnd('걸린 시간');
 
 /**
