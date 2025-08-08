@@ -1,7 +1,7 @@
-import solution from './examples/10-dynamic-programming/ex3.js';
+import solution from './examples/10-dynamic-programming/ex4.js';
 
 console.time('걸린 시간');
-console.log(solution(8, [5, 3, 7, 8, 6, 2, 9, 4]));
+console.log(solution(3, [1, 2, 5], 15));
 console.timeEnd('걸린 시간');
 
 /**
