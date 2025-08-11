@@ -25,6 +25,7 @@ export default function solution(n, arr) {
 
 	for (let i = 1; i < n; i++) {
 		let max = 0;
+
 		for (let j = i - 1; j >= 0; j--) {
 			if (arr[i] > arr[j] && max < dp[j]) max = dp[j];
 		}
@@ -32,6 +33,6 @@ export default function solution(n, arr) {
 		dp[i] = max + 1;
 		answer = Math.max(answer, dp[i]);
 	}
-	console.log(dp);
+
 	return answer;
 }

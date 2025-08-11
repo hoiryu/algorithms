@@ -1,5 +1,6 @@
 /**
- * 동전교환(냅색 알고리즘)
+ * 냅색 알고리즘 (중복 부분집합)
+ * 동전교환
  * 다음과 같이 여러 단위의 동전들이 주어져 있을때 거스름돈을 가장 적은 수의 동전으로 교환
  * 해주려면 어떻게 주면 되는가? 각 단위의 동전은 무한정 쓸 수 있다.
  * ▣ 입력설명
@@ -20,12 +21,13 @@ export default function solution(n, arr, m) {
 	let answer = 0;
 	const dp = Array.from({ length: m + 1 }, () => 1000);
 	dp[0] = 0;
+
 	for (let i = 0; i < n; i++) {
 		for (let j = arr[i]; j <= m; j++) {
 			dp[j] = Math.min(dp[j], dp[j - arr[i]] + 1);
 		}
 	}
-	console.log(dp);
+
 	answer = dp[m];
 
 	return answer;
