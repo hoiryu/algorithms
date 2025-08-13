@@ -3,6 +3,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+.pnpm-store
 
 # testing
 /coverage
@@ -34,3 +35,4 @@ yarn-error.log*
 next-env.d.ts
 
 *storybook.log
+
