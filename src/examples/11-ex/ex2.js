@@ -23,38 +23,48 @@
  * 입출력 예 #5 처럼 xababcdcdababcdcd 이 입력되어도,
  * 문자열을 x / ababcdcd / ababcdcd 로 자르는 것은 불가능합니다.
  * 이 경우 어떻게 문자열을 잘라도 압축되지 않으므로 가장 짧은 길이는 17이 됩니다.
+ *
+ * aabbaccc
+ * 7
+ *
+ * ababcdcdababcdcd
+ * 9
+ *
+ * abcabcdede
+ * 8
+ *
+ * abcabcabcabcdededededede
+ * 14
+ *
+ * xababcdcdababcdcd
+ * 17
  */
-export default function solution(str) {
-	let answer = str.length;
 
-	for (let i = Math.floor(str.length / 2); i >= 2; i--) {
-		const hash = new Map();
-		let s = str.split('');
-		let flag = true;
+export default function solution(s) {
+	let answer = s.length;
 
-		while (s.length > 0) {
-			const t = s.splice(0, i).join('');
-			if (t.length === 1) {
-				flag = false;
-				break;
-			}
+	for (let i = Math.floor(s.length / 2); i >= 1; i--) {
+		let t = [],
+			result = '';
 
-			if (hash.has(t)) hash.set(t, hash.get(t) + 1);
-			else hash.set(t, 1);
+		for (let j = 0; j < s.length; j += i) {
+			if (j + i <= s.length) t.push(s.substring(j, j + i));
+			else t.push(s.substring(j));
 		}
 
-		if (!flag) continue;
+		let count = 1;
 
-		let t = '';
+		for (let j = 1; j < t.length; j++) {
+			if (t[j - 1] === t[j]) count++;
+			else {
+				result += `${count > 1 ? count : ''}${t[j - 1]}`;
+				count = 1;
+			}
+		}
 
-		hash.entries().forEach(([k, v]) => {
-			if (v > 1) t += v + k;
-			else t += k;
-		});
+		result += `${count > 1 ? count : ''}${t.at(-1)}`;
 
-		console.log(t, t.length);
-
-		if (flag) answer = Math.min(answer, t.length);
+		answer = Math.min(answer, result.length);
 	}
 
 	return answer;

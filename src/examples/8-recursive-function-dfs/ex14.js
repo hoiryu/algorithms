@@ -39,26 +39,3 @@ export default function solution(n, m) {
 
 	return answer;
 }
-
-// export default function solution(n, m) {
-// 	let answer = [];
-// 	const t = Array(m).fill(0);
-// 	const checks = Array(n + 1).fill(0);
-// 	function dfs(l, s) {
-// 		if (l === m) {
-// 			return answer.push([...t]);
-// 		}
-
-// 		for (let i = s; i <= n; i++) {
-// 			if (checks[i] === 1) continue;
-// 			t[l] = i;
-// 			checks[i] = 1;
-// 			dfs(l + 1, i + 1);
-// 			checks[i] = 0;
-// 		}
-// 	}
-
-// 	dfs(0, 1);
-
-// 	return answer;
-// }
