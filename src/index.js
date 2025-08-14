@@ -1,23 +1,7 @@
-import solution from './examples/11-ex/ex4.js';
+import solution from './examples/12-gcd-lcm/ex1.js';
 
 console.time('걸린 시간');
-console.log(
-	solution(
-		4,
-		[
-			[0, 0, 0, 0],
-			[0, 0, 0, 0],
-			[0, 0, 0, 0],
-			[0, 0, 0, 0],
-		],
-		[
-			[0, 1, 0],
-			[0, 1, 1],
-			[0, 1, 0],
-			[2, 1, 2],
-		],
-	),
-);
+console.log(solution(3, 12));
 console.timeEnd('걸린 시간');
 
 /**
