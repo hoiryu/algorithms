@@ -23,25 +23,25 @@
  * 1 ≤ gifts의 길이 ≤ 10,000
  * gifts의 원소는 "A B"형태의 문자열입니다. A는 선물을 준 친구의 이름을 B는 선물을 받은 친구의 이름을 의미하며 공백 하나로 구분됩니다.
  * A와 B는 friends의 원소이며 A와 B가 같은 이름인 경우는 존재하지 않습니다.
- * 
+ *
  * ▣ 입력예제 1
  * ["muzi", "ryan", "frodo", "neo"],
  * ["muzi frodo", "muzi frodo", "ryan muzi", "ryan muzi", "ryan muzi", "frodo muzi", "frodo ryan", "neo muzi"]
  * ▣ 출력예제 1
  * 2
- * 
+ *
  * ▣ 입력예제 2
  * ["joy", "brad", "alessandro", "conan", "david"],
  * ["alessandro brad", "alessandro joy", "alessandro conan", "david alessandro", "alessandro david"]
  * ▣ 출력예제 2
  * 4
- * 
+ *
  * ▣ 입력예제 3
  * ["a", "b", "c"],
  * ["a b", "b a", "c a", "a c", "a c", "c a"]
  * ▣ 출력예제 3
  * 0
-
+ *
  */
 export default function solution(friends, gifts) {
 	let answer = 0;
