@@ -13,36 +13,40 @@
  * 둘째 줄에 마구간의 좌표 xi(0<=xi<=1,000,000,000)가 차례로 주어집니다.
  * ▣ 출력설명
  * 첫 줄에 가장 가까운 두 말의 최대 거리를 출력하세요.
+ *
  * ▣ 입력예제 1
- * 5 3
- * 1 2 8 4 9
- * 1,4,9
+ * 5, 3,
+ * [1, 2, 8, 4, 9]
  * ▣ 출력예제 1
  * 3
  */
-function getCount(arr, midPoint) {
-	let count = 1,
-		p1 = arr[0];
 
-	for (let i = 1; i < arr.length; i++) {
-		if (arr[i] - p1 >= midPoint) {
-			p1 = arr[i];
+function getCount(xi, midPoint) {
+	let count = 1,
+		p1 = 1;
+
+	// 전달받은 마굿간 간격을 바탕으로 말의 배치수를 체크
+	for (let i = 0; i < xi.length; i++) {
+		if (xi[i] - p1 >= midPoint) {
 			count++;
+			p1 = xi[i];
 		}
 	}
 
 	return count;
 }
 
-export default function solution(n, c, arr) {
+export default function solution(n, c, xi) {
+	xi.sort((a, b) => a - b);
 	let answer = 0,
 		p1 = 1,
-		p2 = arr.at(-1);
-	arr.sort((a, b) => a - b);
+		p2 = xi.at(-1);
 
+	// 모든 간격을 이분탐색으로 계산
 	while (p1 <= p2) {
-		let midPoint = Math.floor((p1 + p2) / 2);
-		if (getCount(arr, midPoint) >= c) {
+		let midPoint = Math.floor((p1 + p2) / 2); // 마굿간 간격
+
+		if (getCount(xi, midPoint) >= c) {
 			answer = midPoint;
 			p1 = midPoint + 1;
 		} else {
