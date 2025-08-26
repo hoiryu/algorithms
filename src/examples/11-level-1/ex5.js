@@ -41,7 +41,6 @@
  * ["a b", "b a", "c a", "a c", "a c", "c a"]
  * ▣ 출력예제 3
  * 0
- *
  */
 export default function solution(friends, gifts) {
 	let answer = 0;
