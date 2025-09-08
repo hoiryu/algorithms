@@ -12,16 +12,14 @@
  * ▣ 출력예제 1
  * 1011
  */
+
 export default function solution(n) {
 	let answer = [];
 
-	function dfs(n) {
-		if (n < 1) return;
-
-		dfs(Math.floor(n / 2));
-		answer.push(n % 2);
+	while (n > 0) {
+		answer.unshift(n % 2);
+		n = Math.floor(n / 2);
 	}
 
-	dfs(n);
 	return answer;
 }

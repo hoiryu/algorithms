@@ -9,26 +9,57 @@
  * ▣ 출력설명
  * 첫 번째 줄에 거슬러 줄 동전의 최소개수를 출력한다.
  * ▣ 입력예제 1
- * 3
- * 1 2 5
- * 15
+ * 3, [1, 2, 5], 15
  * ▣ 출력예제 1
  * 3
  * 설명 : 5 5 5 동전 3개로 거슬러 줄 수 있다.
  */
-export default function solution(n, arr, m) {
-	let answer = Number.MAX_SAFE_INTEGER;
+function dfs(arr, m) {
+	let result = Infinity;
+	const n = arr.length;
+	const stack = [{ sum: 0, count: 0 }];
+	const visited = new Set();
 
-	function dfs(l, sum) {
-		if (sum > m || answer <= l) return;
-		if (sum === m) return (answer = Math.min(answer, l));
+	while (stack.length) {
+		const { sum, count } = stack.pop();
+		const key = `${sum}-${count}`;
+		if (visited.has(key)) continue;
+		else visited.add(key);
 
-		for (let i = 0; i < n; i++) {
-			dfs(l + 1, sum + arr[i]);
+		if (count > result || sum > m) continue;
+		if (sum === m) {
+			result = Math.min(result, count);
+			continue;
+		}
+
+		for (let i = n - 1; i >= 0; i--) {
+			stack.push({ sum: sum + arr[i], count: count + 1 });
 		}
 	}
 
-	dfs(0, 0);
+	return result;
+}
+
+export default function solution(n, arr, m) {
+	const answer = dfs(arr, m);
 
 	return answer;
 }
+
+// 재귀
+// export default function solution(n, arr, m) {
+// 	let answer = Number.MAX_SAFE_INTEGER;
+
+// 	function dfs(l, sum) {
+// 		if (sum > m || answer <= l) return;
+// 		if (sum === m) return (answer = Math.min(answer, l));
+
+// 		for (let i = 0; i < n; i++) {
+// 			dfs(l + 1, sum + arr[i]);
+// 		}
+// 	}
+
+// 	dfs(0, 0);
+
+// 	return answer;
+// }

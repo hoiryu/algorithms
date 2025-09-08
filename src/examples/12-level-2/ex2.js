@@ -1,21 +1,6 @@
 /**
  * 서버 증설 횟수
- * 당신은 온라인 게임을 운영하고 있습니다.
- * 같은 시간대에 게임을 이용하는 사람이 m명 늘어날 때마다 서버 1대가 추가로 필요합니다.
- * 어느 시간대의 이용자가 m명 미만이라면, 서버 증설이 필요하지 않습니다.
- * 어느 시간대의 이용자가 n x m명 이상 (n + 1) x m명 미만이라면 최소 n대의 증설된 서버가 운영 중이어야 합니다.
- * 한 번 증설한 서버는 k시간 동안 운영하고 그 이후에는 반납합니다.
- * 예를 들어, k = 5 일 때 10시에 증설한 서버는 10 ~ 15시에만 운영됩니다.
- *
- * 하루 동안 모든 게임 이용자가 게임을 하기 위해 서버를 최소 몇 번 증설해야 하는지 알고 싶습니다.
- * 같은 시간대에 서버를 x대 증설했다면 해당 시간대의 증설 횟수는 x회입니다.
- * 다음은 m = 3, k = 5 일 때의 시간대별 증설된 서버의 수와 증설 횟수 예시입니다.
- * 제한사항
- * players의 길이 = 24
- * 0 ≤ players의 원소 ≤ 1,000
- * players[i]는 i시 ~ i+1시 사이의 게임 이용자의 수를 나타냅니다.
- * 1 ≤ m ≤ 1,000
- * 1 ≤ k ≤ 24
+ * https://school.programmers.co.kr/learn/courses/30/lessons/389479
  *
  * ▣ 입력예제 1
  * [0, 2, 3, 3, 1, 2, 0, 0, 0, 0, 4, 2, 0, 6, 0, 4, 2, 13, 3, 5, 10, 0, 1, 5], 3, 5
@@ -37,12 +22,13 @@ export default function solution(players, m, k) {
 	const queue = [];
 
 	for (let i = 0; i < players.length; i++) {
-		const p = players[i];
-		while (queue[0] < i) queue.shift();
-		if (m > p) continue;
+		let count = players[i];
+		while (queue[0] === i) queue.shift();
 
-		while ((queue.length + 1) * m <= p) {
-			queue.push(i + k - 1);
+		if (count < m) continue;
+
+		while ((queue.length + 1) * m <= count) {
+			queue.push(i + k);
 			answer++;
 		}
 	}

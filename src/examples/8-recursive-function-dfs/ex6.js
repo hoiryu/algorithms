@@ -1,5 +1,5 @@
 /**
- * 부분 집합
+ * Subset
  * 바둑이 승차(DFS)
  * 철수는 그의 바둑이들을 데리고 시장에 가려고 한다. 그런데 그의 트럭은 C킬로그램 넘게 태
  * 울수가 없다. 철수는 C를 넘지 않으면서 그의 바둑이들을 가장 무겁게 태우고 싶다.
@@ -11,27 +11,50 @@
  * ▣ 출력설명
  * 첫 번째 줄에 가장 무거운 무게를 출력한다.
  * ▣ 입력예제 1
- * 259 5
- * 81
- * 58
- * 42
- * 33
- * 61
+ * 259,
+ * [81, 58, 42, 33, 61]
  * ▣ 출력예제 1
  * 242
  */
-export default function solution(c, n, arr) {
-	let answer = Number.MIN_SAFE_INTEGER;
+function dfs(c, arr) {
+	let result = -Infinity;
+	const n = arr.length;
+	const stack = [{ index: 0, sum: 0 }];
 
-	function dfs(l, sum) {
-		if (sum > c) return;
-		if (l === n) return (answer = Math.max(answer, sum));
+	while (stack.length) {
+		const { index, sum } = stack.pop();
+		if (sum > c) continue;
 
-		dfs(l + 1, sum + arr[l]);
-		dfs(l + 1, sum);
+		if (index === n) {
+			result = Math.max(result, sum);
+			continue;
+		}
+
+		stack.push({ index: index + 1, sum });
+		stack.push({ index: index + 1, sum: sum + arr[index] });
 	}
 
-	dfs(0, 0);
+	return result;
+}
 
+export default function solution(c, arr) {
+	let answer = dfs(c, arr);
 	return answer;
 }
+
+// 재귀
+// export default function solution(c, n, arr) {
+// 	let answer = Number.MIN_SAFE_INTEGER;
+
+// 	function dfs(l, sum) {
+// 		if (sum > c) return;
+// 		if (l === n) return (answer = Math.max(answer, sum));
+
+// 		dfs(l + 1, sum + arr[l]);
+// 		dfs(l + 1, sum);
+// 	}
+
+// 	dfs(0, 0);
+
+// 	return answer;
+// }

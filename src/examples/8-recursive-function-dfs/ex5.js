@@ -16,29 +16,41 @@
  * ▣ 출력설명
  * 첫 번째 줄에 “YES" 또는 ”NO"를 출력한다.
  * ▣ 입력예제 1
- * 6
- * 1 3 5 6 7 10
+ * [1, 3, 5, 6, 7, 10]
  * ▣ 출력예제 1
  * YES
  */
-export default function solution(n, arr) {
+
+export default function solution(arr) {
 	let answer = 'NO';
-	const total = arr.reduce((prev, current) => prev + current, 0) / 2;
-	const checks = Array(n).fill(0);
+	const n = arr.length;
+	const visited = new Set();
+	const stack = [{ index: 0, chosen: [], a: 0, b: 0 }];
 
-	function dfs(l, sum) {
-		if (answer === 'YES' || sum > total) return;
-		if (l === n) {
-			if (sum === total) answer = 'YES';
-			return;
+	while (stack.length) {
+		const { index, chosen, a, b } = stack.pop();
+
+		if (index === n) {
+			if (a === b) {
+				answer = 'YES';
+				console.log(chosen);
+				break;
+			}
+			continue;
 		}
-		checks[l] = 1;
-		dfs(l + 1, sum + arr[l]);
-		checks[l] = 0;
-		dfs(l + 1, sum);
-	}
 
-	dfs(0, 0);
+		const key = `${index}-${a}-${b}`;
+		if (visited.has(key)) continue;
+		else visited.add(key);
+
+		stack.push({ index: index + 1, chosen, a: a + arr[index], b });
+		stack.push({
+			index: index + 1,
+			chosen: chosen.slice().concat(arr[index]),
+			a,
+			b: b + arr[index],
+		});
+	}
 
 	return answer;
 }

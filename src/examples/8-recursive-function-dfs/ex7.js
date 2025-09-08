@@ -10,26 +10,48 @@
  * ▣ 출력설명
  * 첫 번째 줄에 제한 시간안에 얻을 수 있는 최대 점수를 출력합니다.
  * ▣ 입력예제 1
- * 5 20
- * 10 5
- * 25 12
- * 15 8
- * 6 3
- * 7 4
+ * 5, 20, [[10, 5], [25, 12], [15, 8], [6, 3], [7, 4]]
  * ▣ 출력예제 1
  * 41
  */
-export default function solution(n, m, arr) {
-	let answer = Number.MIN_SAFE_INTEGER;
 
-	function dfs(l, score, time) {
-		if (time > m) return;
-		if (l === n) return (answer = Math.max(answer, score));
+function dfs(m, arr) {
+	let result = -Infinity;
+	const n = arr.length;
+	const stack = [{ index: 0, point: 0, time: 0 }];
 
-		dfs(l + 1, score + arr[l][0], time + arr[l][1]);
-		dfs(l + 1, score, time);
+	while (stack.length) {
+		const { index, point, time } = stack.pop();
+
+		if (time > m) continue;
+		if (index === n) {
+			result = Math.max(result, point);
+			continue;
+		}
+
+		stack.push({ index: index + 1, point, time });
+		stack.push({ index: index + 1, point: point + arr[index][0], time: time + arr[index][1] });
 	}
 
-	dfs(0, 0, 0);
+	return result;
+}
+
+export default function solution(n, m, arr) {
+	const answer = dfs(m, arr);
 	return answer;
 }
+
+// export default function solution(n, m, arr) {
+// 	let answer = Number.MIN_SAFE_INTEGER;
+
+// 	function dfs(l, score, time) {
+// 		if (time > m) return;
+// 		if (l === n) return (answer = Math.max(answer, score));
+
+// 		dfs(l + 1, score + arr[l][0], time + arr[l][1]);
+// 		dfs(l + 1, score, time);
+// 	}
+
+// 	dfs(0, 0, 0);
+// 	return answer;
+// }

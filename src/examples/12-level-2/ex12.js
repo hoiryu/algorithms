@@ -4,7 +4,7 @@
  * https://school.programmers.co.kr/learn/courses/30/lessons/178870
  *
  * ▣ 입력예제 1
- * [1, 2, 3, 4, 5],7
+ * [1, 2, 3, 4, 5], 7
  * ▣ 출력예제 1
  * [2, 3]
  *
