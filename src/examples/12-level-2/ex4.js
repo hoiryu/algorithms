@@ -16,44 +16,51 @@
  * ▣ 출력예제 2
  * 5
  */
-export default function solution(n, q, ans) {
-	let answer = 0;
-	const m = 5;
+function secretCheck(arr, q, ans) {
+	let result = true;
 
-	// 검사 속도를 위해 선택여부 표시 배열 사용(contains O(1))
-	function checkPicked(picked) {
-		const chosen = new Array(n + 1).fill(0);
-		for (const v of picked) chosen[v] = 1;
+	for (let i = 0; i < q.length; i++) {
+		let count = 0;
 
-		for (let i = 0; i < q.length; i++) {
-			let cnt = 0;
-			for (const v of q[i]) if (chosen[v]) cnt++;
-			if (cnt !== ans[i]) return false;
+		for (let j = 0; j < arr.length; j++) {
+			if (q[i].includes(arr[j])) count++;
 		}
-		return true;
+
+		if (count !== ans[i]) return false;
 	}
 
-	// 스택 원소: { l: 현재까지 고른 개수, s: 다음 시작값, picked: 배열 }
-	const stack = [{ l: 0, s: 1, picked: [] }];
+	return result;
+}
+
+function dfs(n, m, q, ans) {
+	let result = 0;
+	const stack = [{ start: 1, chosen: [] }];
+	const visited = new Set();
 
 	while (stack.length) {
-		const { l, s, picked } = stack.pop();
+		const { start, chosen } = stack.pop();
+		const key = `${start}-${chosen.join('-')}`;
 
-		if (l === m) {
-			if (checkPicked(picked)) answer++;
+		if (visited.has(key)) continue;
+		else visited.add(key);
+
+		if (chosen.length === m) {
+			if (secretCheck(chosen, q, ans)) result++;
 			continue;
 		}
 
-		// 조합 특성상 오름차순으로만 확장
-		// 재귀와 동일하게 s..n 순회하되, DFS이므로 push 순서를 뒤집어야 원래와 동일한 전개
-		for (let i = n; i >= s; i--) {
-			// 남은 슬롯 수로 가지치기 (필수는 아니지만 속도 ↑)
-			const remain = m - l - 1;
-			if (n - (i + 1) + 1 < remain) continue;
-
-			stack.push({ l: l + 1, s: i + 1, picked: [...picked, i] });
+		for (let i = n; i >= start; i--) {
+			stack.push({ start: i + 1, chosen: chosen.slice().concat(i) });
 		}
 	}
+
+	return result;
+}
+
+export default function solution(n, q, ans) {
+	let answer = 0;
+	const m = q[0].length;
+	answer = dfs(n, m, q, ans);
 
 	return answer;
 }

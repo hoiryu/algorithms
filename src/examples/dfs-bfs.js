@@ -78,7 +78,6 @@ export function permutation(n, m) {
 
 		for (let i = n - 1; i >= 0; i--) {
 			if (checked[i]) continue;
-
 			const newChecked = checked.slice();
 			newChecked[i] = true;
 			stack.push({ chosen: chosen.slice().concat(i), checked: newChecked });
@@ -99,7 +98,6 @@ export function permutation(n, m) {
  */
 export function combination(n, m) {
 	const result = [];
-	// 스택에 상태 저장: { start: 다음 선택 시작 위치, chosen: 지금까지 뽑은 배열 }
 	const stack = [{ start: 1, chosen: [] }];
 
 	while (stack.length) {
@@ -110,7 +108,6 @@ export function combination(n, m) {
 			continue;
 		}
 
-		// 뒤쪽부터 push 하면 pop 했을 때 앞쪽 숫자가 먼저 나옵니다.
 		for (let i = n; i >= start; i--) {
 			stack.push({ start: i + 1, chosen: chosen.slice().concat(i) });
 		}
