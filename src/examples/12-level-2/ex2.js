@@ -1,4 +1,5 @@
 /**
+ * Queue
  * 서버 증설 횟수
  * https://school.programmers.co.kr/learn/courses/30/lessons/389479
  *
@@ -23,7 +24,7 @@ export default function solution(players, m, k) {
 
 	for (let i = 0; i < players.length; i++) {
 		let count = players[i];
-		while (queue[0] === i) queue.shift();
+		while (queue.at(0) === i) queue.shift();
 
 		if (count < m) continue;
 

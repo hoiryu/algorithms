@@ -1,5 +1,6 @@
 /**
- * [PCCP 기출문제] 2번 / 퍼즐 게임 챌린지
+ * Two Pointers
+ * 퍼즐 게임 챌린지
  * https://school.programmers.co.kr/learn/courses/30/lessons/340212
  *
  * ▣ 입력예제 1
@@ -23,32 +24,24 @@
  * 3456789012
  */
 export default function solution(diffs, times, limit) {
-	let answer = Number.MAX_SAFE_INTEGER;
-	const n = diffs.length;
-	let maxLevel = Number.MIN_SAFE_INTEGER;
-	for (let diff of diffs) maxLevel = Math.max(maxLevel, diff);
+	let answer = Infinity,
+		maximum = -Infinity;
+	for (const diff of diffs) maximum = Math.max(maximum, diff);
 	let p1 = 1,
-		p2 = maxLevel;
+		p2 = maximum;
 
 	while (p1 <= p2) {
-		const mid = Math.floor((p1 + p2) / 2);
+		const level = Math.floor((p1 + p2) / 2);
 		let sum = 0;
-
-		for (let i = 0; i < n; i++) {
+		for (let i = 0; i < diffs.length; i++) {
 			if (sum > limit) break;
-
-			if (diffs[i] <= mid) {
-				sum += times[i];
-			} else if (diffs[i] > mid) {
-				sum += (times[i] + times[i - 1]) * (diffs[i] - mid) + times[i];
-			}
+			if (level >= diffs[i]) sum += times[i];
+			else sum += (times[i] + times[i - 1]) * (diffs[i] - level) + times[i];
 		}
-
-		if (sum > limit) {
-			p1 = mid + 1;
-		} else if (sum <= limit) {
-			p2 = mid - 1;
-			answer = Math.min(answer, mid);
+		if (sum > limit) p1 = level + 1;
+		else {
+			p2 = level - 1;
+			answer = Math.min(answer, level);
 		}
 	}
 
