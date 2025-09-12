@@ -1,4 +1,5 @@
 /**
+ * Brute force + Hash
  * [PCCP 기출문제] 3번 / 충돌위험 찾기
  * https://school.programmers.co.kr/learn/courses/30/lessons/340211
  *
@@ -20,44 +21,43 @@
  * ▣ 출력예제 3
  * 0
  */
-function getPath(i, sr, sc, er, ec, paths) {
-	while (sr !== er || sc !== ec) {
-		if (sr > er) sr -= 1;
-		else if (sr < er) sr += 1;
-		else if (sc > ec) sc -= 1;
-		else if (sc < ec) sc += 1;
-		paths[i].push([sr, sc]);
+function setPath(paths, i, cr, cc, er, ec) {
+	while (cr !== er || cc !== ec) {
+		if (cr > er) cr--;
+		else if (cr < er) cr++;
+		else if (cc > ec) cc--;
+		else if (cc < ec) cc++;
+		paths[i].push([cr, cc]);
 	}
 }
 
 export default function solution(points, routes) {
 	let answer = 0;
-	const n = points.length; // 좌표 개수
-	const x = routes.length; // 로봇 개수
-	const m = routes[1].length; // 운송 경로
-	let maxTime = Number.MIN_SAFE_INTEGER;
-	const paths = routes.reduce((acc, cur, idx) => {
-		if (!cur.length) return acc;
-		acc[idx] = [points[routes[idx][0] - 1]];
-		return acc;
+	const x = routes.length; // 로봇 수
+	const m = routes[0].length; // 운송 경로 수
+	let max = -Infinity;
+	const paths = routes.reduce((a, c, i) => {
+		a[i] = [points[c[0] - 1]];
+		return a;
 	}, {});
 
 	for (let i = 0; i < x; i++) {
 		for (let j = 1; j < m; j++) {
-			const [sr, sc] = points[routes[i][j - 1] - 1];
+			const [cr, cc] = points[routes[i][j - 1] - 1];
 			const [er, ec] = points[routes[i][j] - 1];
-			getPath(i, sr, sc, er, ec, paths);
+			setPath(paths, i, cr, cc, er, ec);
 		}
 	}
 
-	for (const [k, v] of Object.entries(paths)) maxTime = Math.max(maxTime, v.length);
+	for (const [k, v] of Object.entries(paths)) max = Math.max(max, v.length);
 
-	for (let i = 0; i < maxTime; i++) {
+	for (let i = 0; i < max; i++) {
 		const hash = new Map();
 
 		for (let j = 0; j < x; j++) {
-			if (paths[j].length <= i) continue;
+			if (!paths[j][i]) continue;
 			const key = paths[j][i].join('-');
+
 			if (hash.has(key)) hash.set(key, hash.get(key) + 1);
 			else hash.set(key, 1);
 		}
