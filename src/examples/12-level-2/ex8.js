@@ -1,4 +1,5 @@
 /**
+ * BFS + Graph
  * [PCCP 기출문제] 2번 / 석유 시추
  * https://school.programmers.co.kr/learn/courses/30/lessons/250136
  *
@@ -26,46 +27,51 @@
  * ▣ 출력예제 2
  * 16
  */
+function bfs(land, memo, id, sr, sc, mr, mc) {
+	let count = 1;
+	const dr = [-1, 0, 1, 0],
+		dc = [0, 1, 0, -1],
+		queue = [[sr, sc]];
+	memo[sr][sc] = id;
+
+	while (queue.length) {
+		const [cr, cc] = queue.shift();
+
+		for (let i = 0; i < dr.length; i++) {
+			const nr = cr + dr[i],
+				nc = cc + dc[i];
+
+			if (
+				nr < 0 ||
+				nr >= mr ||
+				nc < 0 ||
+				nc >= mc ||
+				land[nr][nc] === 0 ||
+				memo[nr][nc] !== -1
+			)
+				continue;
+
+			memo[nr][nc] = id;
+			count++;
+			queue.push([nr, nc]);
+		}
+	}
+
+	return count;
+}
+
 export default function solution(land) {
-	let answer = 0;
-	const mr = land.length;
-	const mc = land[0].length;
-	const memo = Array.from({ length: mr }, () => Array(mc).fill(-1));
-	const sizes = [];
-	const dr = [-1, 0, 1, 0];
-	const dc = [0, 1, 0, -1];
-	let id = 0;
+	let answer = -Infinity,
+		id = 0;
+	const mr = land.length,
+		mc = land[0].length,
+		memo = Array.from({ length: mr }, () => Array.from({ length: mc }).fill(-1)),
+		sizes = [];
 
 	for (let r = 0; r < mr; r++) {
 		for (let c = 0; c < mc; c++) {
-			if (land[r][c] !== 1 || memo[r][c] !== -1) continue;
-			let count = 0;
-			const queue = [[r, c]];
-			memo[r][c] = id;
-
-			while (queue.length) {
-				const [r, c] = queue.shift();
-				count++;
-
-				for (let k = 0; k < dr.length; k++) {
-					const nr = r + dr[k];
-					const nc = c + dc[k];
-					if (
-						nr < 0 ||
-						nr >= mr ||
-						nc < 0 ||
-						nc >= mc ||
-						land[nr][nc] !== 1 ||
-						memo[nr][nc] !== -1
-					)
-						continue;
-
-					memo[nr][nc] = id;
-					queue.push([nr, nc]);
-				}
-			}
-
-			sizes[id] = count;
+			if (land[r][c] === 0 || memo[r][c] !== -1) continue;
+			sizes[id] = bfs(land, memo, id, r, c, mr, mc);
 			id++;
 		}
 	}
