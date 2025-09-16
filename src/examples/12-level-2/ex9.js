@@ -37,19 +37,18 @@
  * ▣ 출력예제 7
  * 2852
  */
-function countMeets(start, end, count, point) {
+function timeCount(start, end, count, point) {
 	const sc = Math.floor((start * count) / point);
 	const ec = Math.floor((end * count) / point);
 	return ec - sc + (start % point === 0 ? 1 : 0);
 }
 
 export default function solution(h1, m1, s1, h2, m2, s2) {
-	let answer = 0;
 	const start = h1 * 3600 + m1 * 60 + s1;
 	const end = h2 * 3600 + m2 * 60 + s2;
-	const sm = countMeets(start, end, 59, 60 * 60);
-	const sh = countMeets(start, end, 719, 60 * 60 * 12);
-	const smh = countMeets(start, end, 1, 60 * 60 * 12);
-	answer = sm + sh - smh;
+	const sm = timeCount(start, end, 59, 60 * 60);
+	const sh = timeCount(start, end, 719, 60 * 60 * 12);
+	const smh = timeCount(start, end, 1, 60 * 60 * 12);
+	const answer = sm + sh - smh;
 	return answer;
 }
