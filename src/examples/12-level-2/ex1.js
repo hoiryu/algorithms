@@ -25,7 +25,7 @@
  */
 export default function solution(info, n, m) {
 	let answer = Infinity;
-	const ml = info.length;
+	const max = info.length;
 	const stack = [{ index: 0, a: 0, b: 0 }];
 	const visited = new Set();
 
@@ -33,16 +33,20 @@ export default function solution(info, n, m) {
 		const { index, a, b } = stack.pop();
 
 		if (a >= n || b >= m) continue;
-		if (index === ml) {
+
+		if (index === max) {
 			if (a < n && b < m) answer = Math.min(answer, a);
 			continue;
 		}
 
 		const key = `${index}-${a}-${b}`;
+
 		if (visited.has(key)) continue;
-		else visited.add(key);
+
+		visited.add(key);
 
 		stack.push({ index: index + 1, a: a + info[index][0], b });
+
 		stack.push({ index: index + 1, a: a, b: b + info[index][1] });
 	}
 
