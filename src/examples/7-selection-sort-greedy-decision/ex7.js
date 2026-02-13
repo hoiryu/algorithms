@@ -8,27 +8,22 @@
  * ▣ 출력설명
  * N개의 좌표를 정렬하여 출력하세요.
  * ▣ 입력예제 1
- * 5
- * 2 7
- * 1 3
- * 1 2
- * 2 5
- * 3 6
+ * [[2, 7],
+ * [1, 3],
+ * [1, 2],
+ * [2, 5],
+ * [3, 6]]
  * ▣ 출력예제 1
- * 1 2
- * 1 3
- * 2 5
- * 2 7
- * 3 6
+ * [[1, 2]
+ * [1, 3]
+ * [2, 5]
+ * [2, 7]
+ * [3, 6]]
  */
 
-export default function solution(n, arr) {
-	let answer = arr;
-
-	arr.sort((a, b) => {
+export default function solution(arr) {
+	return arr.sort((a, b) => {
 		if (a[0] === b[0]) return a[1] - b[1];
 		return a[0] - b[0];
 	});
-
-	return answer;
 }
