@@ -12,25 +12,29 @@
  * ▣ 출력설명
  * 첫째 줄에 경우의 수를 출력한다.
  * ▣ 입력예제 1
- * 8 6
- * 1 2 1 3 1 1 1 2
+ * 6,
+ * [1, 2, 1, 3, 1, 1, 1, 2]
  * ▣ 출력예제 1
  * 3
  */
-export default function solution(n, m, arr) {
+export default function solution(m, arr) {
 	let answer = 0,
 		p1 = 0,
+		p2 = 0,
 		sum = 0;
+	const n = arr.length;
 
-	for (let p2 = 0; p2 < n; p2++) {
+	while (p2 < n) {
 		sum += arr[p2];
 
 		if (sum === m) answer++;
 
-		while (sum >= m) {
+		while (sum > m) {
 			sum -= arr[p1++];
 			if (sum === m) answer++;
 		}
+
+		p2++;
 	}
 
 	return answer;
