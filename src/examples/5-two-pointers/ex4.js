@@ -13,21 +13,38 @@
  * ▣ 출력설명
  * 첫째 줄에 경우의 수를 출력한다.
  * ▣ 입력예제 1
- * 5 5
- * 1 3 1 2 3
+ * 5,
+ * [1, 3, 1, 2, 3]
  * ▣ 출력예제 1
  * 10
  */
-export default function solution(n, m, arr) {
+export default function solution(m, arr) {
 	let answer = 0,
 		p1 = 0,
+		p2 = 0,
 		sum = 0;
+	const n = arr.length;
 
-	for (let p2 = 0; p2 < n; p2++) {
+	while (p2 < n) {
 		sum += arr[p2];
 		while (sum > m) sum -= arr[p1++];
 		answer += p2 - p1 + 1;
+		p2++;
 	}
 
 	return answer;
 }
+
+// export default function solution(n, m, arr) {
+// 	let answer = 0,
+// 		p1 = 0,
+// 		sum = 0;
+
+// 	for (let p2 = 0; p2 < n; p2++) {
+// 		sum += arr[p2];
+// 		while (sum > m) sum -= arr[p1++];
+// 		answer += p2 - p1 + 1;
+// 	}
+
+// 	return answer;
+// }
