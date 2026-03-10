@@ -14,19 +14,22 @@
  * 3
  * 출력설명: {bac}, {acb}, {cba} 3개의 부분문자열이 "abc"문자열과 아나그램입니다.
  */
-function hasSameEntries(a, b) {
-	if (a.size !== b.size) return false;
+const hasAnagram = (h1, h2) => {
+	if (h1.size !== h2.size) return false;
 
-	for (let [k, v] of a) if (!b.has(k) || b.get(k) !== v) return false;
+	for (const [k, v] of h1) {
+		if (!h2.has(k) || v !== h2.get(k)) return false;
+	}
 
 	return true;
-}
+};
 
 export default function solution(s, t) {
 	let answer = 0,
 		p1 = 0,
-		hash1 = new Map(),
-		hash2 = new Map();
+		p2 = 2;
+	const hash1 = new Map();
+	const hash2 = new Map();
 
 	for (let i = 0; i < t.length; i++) {
 		if (hash1.has(t[i])) hash1.set(t[i], hash1.get(t[i]) + 1);
@@ -38,17 +41,18 @@ export default function solution(s, t) {
 		else hash2.set(s[i], 1);
 	}
 
-	for (let i = t.length - 1; i < s.length; i++) {
-		if (hash2.has(s[i])) hash2.set(s[i], hash2.get(s[i]) + 1);
-		else hash2.set(s[i], 1);
+	while (p2 < s.length) {
+		if (hash2.has(s[p2])) hash2.set(s[p2], hash2.get(s[p2]) + 1);
+		else hash2.set(s[p2], 1);
 
-		if (hasSameEntries(hash1, hash2)) answer++;
+		if (hasAnagram(hash1, hash2)) answer++;
 
 		hash2.set(s[p1], hash2.get(s[p1]) - 1);
 
-		if (hash2.get(s[p1]) === 0) hash2.delete(s[p1]);
+		if (hash2.get(s[p1]) <= 0) hash2.delete(s[p1]);
 
 		p1++;
+		p2++;
 	}
 
 	return answer;

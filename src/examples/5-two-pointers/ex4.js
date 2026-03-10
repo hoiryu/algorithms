@@ -34,17 +34,3 @@ export default function solution(m, arr) {
 
 	return answer;
 }
-
-// export default function solution(n, m, arr) {
-// 	let answer = 0,
-// 		p1 = 0,
-// 		sum = 0;
-
-// 	for (let p2 = 0; p2 < n; p2++) {
-// 		sum += arr[p2];
-// 		while (sum > m) sum -= arr[p1++];
-// 		answer += p2 - p1 + 1;
-// 	}
-
-// 	return answer;
-// }
