@@ -1,4 +1,4 @@
-import solution from './examples/5-two-pointers/ex4.js';
+import solution from './examples/';
 
 console.time('걸린 시간');
 console.log(solution());

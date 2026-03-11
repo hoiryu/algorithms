@@ -14,34 +14,19 @@
 export default function solution(str) {
 	let answer = 'YES';
 	const stack = [];
+	let n = 0;
 
-	for (let s of str) {
-		if (s === '(') stack.push(s);
-		else if (!stack.pop()) {
+	while (n < str.length) {
+		if (str[n] === '(') {
+			stack.push(str[n]);
+		} else if (!stack.pop()) {
 			answer = 'NO';
 			break;
 		}
+		n++;
 	}
 
-	if (stack.length > 0) answer = 'NO';
+	if (stack.length) answer = 'NO';
 
 	return answer;
 }
-
-// export default function solution(str) {
-// 	let answer = 'YES',
-// 		stack = [];
-
-// 	for (let s of str) {
-// 		if (s === '(') {
-// 			stack.push(s);
-// 		} else {
-// 			if (stack.length === 0) return 'NO';
-// 			stack.pop();
-// 		}
-// 	}
-
-// 	if (stack.length !== 0) return 'NO';
-
-// 	return answer;
-// }
