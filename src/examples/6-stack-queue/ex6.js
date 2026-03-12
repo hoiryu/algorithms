@@ -1,4 +1,5 @@
 /**
+ * Queue
  * 공주 구하기
  * 정보 왕국의 이웃 나라 외동딸 공주가 숲속의 괴물에게 잡혀갔습니다.
  * 정보 왕국에는 왕자가 N명이 있는데 서로 공주를 구하러 가겠다고 합니다. 정보왕국의 왕은
@@ -23,16 +24,25 @@
  * ▣ 출력설명
  * 첫 줄에 마지막 남은 왕자의 번호를 출력합니다.
  * ▣ 입력예제 1
- * 8 3
+ * 8, 3
  * ▣ 출력예제 1
  * 7
  */
+
 export default function solution(n, k) {
-	let answer;
-	let queue = Array.from({ length: n }, (v, k) => k + 1);
+	let answer = 0;
+	const queue = Array.from({ length: n }).map((_, i) => i + 1);
+
 	while (queue.length) {
-		for (let i = 0; i < k - 1; i++) queue.push(queue.shift());
+		let p1 = 1;
+
+		while (p1 < k) {
+			queue.push(queue.shift());
+			p1++;
+		}
+
 		queue.shift();
+
 		if (queue.length === 1) answer = queue.shift();
 	}
 

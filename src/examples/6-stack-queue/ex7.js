@@ -1,4 +1,5 @@
 /**
+ * Queue
  * 교육과정 설계
  * 현수는 1년 과정의 수업계획을 짜야 합니다.
  * 수업중에는 필수과목이 있습니다. 이 필수과목은 반드시 이수해야 하며, 그 순서도 정해져 있
@@ -18,7 +19,7 @@
  * ▣ 출력설명
  * 수업설계가 잘된 것이면 “YES", 잘못된 것이면 ”NO“를 출력합니다.
  * ▣ 입력예제 1
- * CBA
+ * CBA,
  * CBDAGE
  * ▣ 출력예제 1
  * YES
@@ -27,8 +28,8 @@ export default function solution(m, n) {
 	let answer = 'NO';
 	let queue = m.split('');
 
-	for (let i of n) {
-		if (queue.includes(i) && i !== queue.shift()) break;
+	for (let s of n) {
+		if (queue.includes(s) && s !== queue.shift()) break;
 
 		if (queue.length === 0) {
 			answer = 'YES';
