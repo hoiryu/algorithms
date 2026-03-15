@@ -1,5 +1,5 @@
 /**
- * greedy
+ * Greedy Decision
  * 결혼식
  * 현수는 다음 달에 결혼을 합니다.
  * 현수는 결혼식 피로연을 장소를 빌려 3일간 쉬지 않고 하려고 합니다.
@@ -15,37 +15,42 @@
  * 시간은 첫날 0시를 0으로 해서 마지막날 밤 12시를 72로 하는 타임라인으로 오는 시간과 가는 시간이 음이 아닌 정수로 표현됩니다.
  * ▣ 출력설명
  * 첫째 줄에 피로연장에 동시에 존재하는 최대 인원을 출력하세요.
+ *
  * ▣ 입력예제 1
- * 5
- * 14 18
- * 12 15
- * 15 20
- * 20 30
+ * [14, 18],
+ * [12, 15],
+ * [15, 20],
+ * [20, 30]
  * 5 14
+ *
  * ▣ 출력예제 1
  * 2
  */
-export default function solution(n, arr) {
-	let answer = 0,
-		count = 0,
-		sortedArr = [];
+const solution = arr => {
+	let answer = 0;
+	let cc = 0;
+	const sortedArr = [];
 
-	for (let i of arr) {
-		sortedArr.push([i[0], 's']);
-		sortedArr.push([i[1], 'e']);
+	for (const [s, e] of arr) {
+		sortedArr.push([s, 1]);
+		sortedArr.push([e, -1]);
 	}
 
-	sortedArr.sort((a, b) => {
-		if (a[0] === b[0]) return a[1].charCodeAt() - b[1].charCodeAt();
-		else return a[0] - b[0];
-	});
+	sortedArr.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
 
-	for (let i of sortedArr) {
-		if (i[1] === 's') count++;
-		else count--;
-
-		if (count > answer) answer = count;
+	for (const [_, c] of sortedArr) {
+		cc += c;
+		answer = Math.max(answer, cc);
 	}
-
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution([
+	[14, 18],
+	[12, 15],
+	[15, 20],
+	[20, 30],
+]);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));
