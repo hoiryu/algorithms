@@ -9,14 +9,15 @@
  * ▣ 출력설명
  * 오름차순으로 정렬된 수열을 출력합니다.
  * ▣ 입력예제 1
- * 6
- * 11 7 5 6 10 9
- * 5 7 11 6 10 9
+ * [11, 7, 5, 6, 10, 9]
+ * [5, 7, 11, 6, 10, 9]
  * ▣ 출력예제 1
  * 5 6 7 9 10 11
  */
-export default function solution(n, arr) {
+
+const solution = arr => {
 	let answer = arr;
+	const n = arr.length;
 
 	for (let i = 0; i < n; i++) {
 		let temp = arr[i],
@@ -31,4 +32,9 @@ export default function solution(n, arr) {
 	}
 
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution([11, 7, 5, 6, 10, 9]);
+console.timeEnd('걸린 시간');
+console.log(log);

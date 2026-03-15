@@ -15,23 +15,34 @@
  * 키(높이) 값 H는 (120<=H<=180)의 자연수 입니다.
  * ▣ 출력설명
  * 첫 번째 줄에 현수의 반 번호와 짝꿍의 반 번호를 차례로 출력합니다.
+ *
  * ▣ 입력예제 1
- * 9
- * 120 125 152 130 135 135 143 127 160
+ * [120, 125, 152, 130, 135, 135, 143, 127, 160]
  * ▣ 출력예제 1
- * 3 8
- * 출력해설 : 키 정보 152가 현수이고, 127이 현수 짝꿍입니다.
+ * [3, 8]
+ *
  * ▣ 입력예제 2
  * 6
- * 120 130 150 150 130 150
+ * [120, 130, 150, 150, 130, 150]
  * ▣ 출력예제 2
- * 3 5
+ * [3, 5]
  */
-export default function solution(n, arr) {
+const solution = arr => {
 	let answer = [];
-	const sortedArr = arr.slice();
-	sortedArr.sort((a, b) => a - b);
+	const n = arr.length;
+	const sortedArr = arr.slice().sort((a, b) => a - b);
+	let i = 0;
 
-	for (let i = 0; i < n; i++) if (arr[i] !== sortedArr[i]) answer.push(i + 1);
+	while (i < n) {
+		if (arr[i] !== sortedArr[i]) answer.push(i + 1);
+		i++;
+	}
+
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+// const log = solution([120, 125, 152, 130, 135, 135, 143, 127, 160]);
+const log = solution([120, 130, 150, 150, 130, 150]);
+console.timeEnd('걸린 시간');
+console.log(log);

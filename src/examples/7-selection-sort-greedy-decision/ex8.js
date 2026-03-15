@@ -1,5 +1,5 @@
 /**
- * greedy
+ * Greedy Decision
  * 회의실 배정
  * 한 개의 회의실이 있는데 이를 사용하고자 하는 n개의 회의들에 대하여 회의실 사용표를 만들
  * 려고 한다. 각 회의에 대해 시작시간과 끝나는 시간이 주어져 있고, 각 회의가 겹치지 않게 하
@@ -11,40 +11,57 @@
  * 회의의 시작시간과 끝나는 시간의 조건은 (시작시간 <= 끝나는 시간)입니다.
  * ▣ 출력설명
  * 첫째 줄에 최대 사용할 수 있는 회의 수를 출력하여라.
+ *
  * ▣ 입력예제 1
- * 5
- * 1 4
- * 2 3
- * 3 5
- * 4 6
- * 5 7
+ * [1, 4],
+ * [2, 3],
+ * [3, 5],
+ * [4, 6],
+ * [5, 7]
+ *
  * ▣ 출력예제 1
  * 3
- * 예제설명
- * (2, 3), (3, 5), (5, 7)이 회의실을 이용할 수 있다.
+ * [2, 3], [3, 5], [5, 7]
+ *
  * ▣ 입력예제 2
- * 3
- * 3 3
- * 1 3
- * 2 3
+ * [3, 3]
+ * [1, 3]
+ * [2, 3]
+ *
  * ▣ 출력예제 2
  * 2
+ * [1, 3], [3, 3]
  */
-export default function solution(n, arr) {
-	let answer = 0,
-		end = 0;
+const solution = arr => {
+	let answer = [];
+	const n = arr.length;
+	let end = 0;
+	let i = 0;
 
 	arr.sort((a, b) => {
 		if (a[1] === b[1]) return a[0] - b[0];
 		return a[1] - b[1];
 	});
 
-	for (let i = 0; i < n; i++) {
+	while (i < n) {
 		if (arr[i][0] >= end) {
-			answer++;
 			end = arr[i][1];
+			answer.push(arr[i]);
 		}
+
+		i++;
 	}
 
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution([
+	[1, 4],
+	[2, 3],
+	[3, 5],
+	[4, 6],
+	[5, 7],
+]);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));

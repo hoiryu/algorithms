@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      extensionless:
+        specifier: ^2.0.6
+        version: 2.0.6
       node:
         specifier: ^23.8.0
         version: 23.8.0
@@ -50,6 +53,9 @@ packages:
     peerDependenciesMeta:
       supports-color:
         optional: true
+
+  extensionless@2.0.6:
+    resolution: {integrity: sha512-Kri4UehTAnQzYpM2gySya2nsCBEChxstgtKtOqR1nqZpF0HYM+BZXaeua9uUhE4Z0CE4kfZp+0JFhKL3SsuKFA==}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -184,6 +190,8 @@ snapshots:
       ms: 2.1.3
     optionalDependencies:
       supports-color: 5.5.0
+
+  extensionless@2.0.6: {}
 
   fill-range@7.1.1:
     dependencies:
