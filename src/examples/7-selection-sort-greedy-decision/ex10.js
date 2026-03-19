@@ -9,26 +9,33 @@
  * ▣ 출력설명
  * 첫 줄에 정렬 후 M의 값의 위치 번호를 출력한다.
  * ▣ 입력예제 1
- * 8 32
- * 23 87 65 12 57 32 99 81
+ * 8, 32, [23, 87, 65, 12, 57, 32, 99, 81]
  * ▣ 출력예제 1
  * 3
  */
-export default function solution(n, m, arr) {
-	let answer = 0,
-		p1 = 0,
-		p2 = n - 1;
-
+const solution = (n, m, arr) => {
+	let answer = 0;
+	let p1 = 0;
+	let p2 = n;
+	let point = 0;
 	arr.sort((a, b) => a - b);
 
 	while (p1 <= p2) {
-		const index = Math.floor((p1 + p2) / 2);
-		if (arr[index] === m) {
-			answer = index + 1;
+		point = Math.floor((p1 + p2) / 2);
+
+		if (m === arr[point]) {
+			answer = point + 1;
 			break;
-		} else if (arr[index] < m) p1 = index + 1;
-		else p2 = index - 1;
+		}
+
+		if (m > arr[point]) p1 = point + 1;
+		else p2 = point - 1;
 	}
 
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution(8, 32, [23, 87, 65, 12, 57, 32, 99, 81]);
+console.log(JSON.stringify(log));
+console.timeEnd('걸린 시간');
