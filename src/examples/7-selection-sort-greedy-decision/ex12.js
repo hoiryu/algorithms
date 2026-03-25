@@ -22,12 +22,12 @@
  * ▣ 출력예제 1
  * 3
  */
-const calculateCount = (pm, arr) => {
+const getCount = (pc, arr) => {
 	let count = 1;
 	let pl = arr[0];
 
 	for (let i = 0; i < arr.length; i++) {
-		if (arr[i] - pl >= pm) {
+		if (arr[i] - pl >= pc) {
 			count++;
 			pl = arr[i];
 		}
@@ -38,19 +38,19 @@ const calculateCount = (pm, arr) => {
 
 const solution = (n, m, arr) => {
 	arr.sort((a, b) => a - b);
-	let answer = Number.MIN_SAFE_INTEGER;
+	let answer = 0;
 	let pl = arr[0];
-	let pr = arr.at(-1) - pl;
+	let pr = arr.at(-1);
 
 	while (pl <= pr) {
-		const pm = Math.floor((pl + pr) / 2);
-		const count = calculateCount(pm, arr);
+		const pc = Math.floor((pl + pr) / 2);
+		const count = getCount(pc, arr);
 
 		if (count >= m) {
-			answer = Math.max(answer, pm);
-			pl = pm + 1;
+			answer = Math.max(answer, pc);
+			pl = pc + 1;
 		} else {
-			pr = pm - 1;
+			pr = pc - 1;
 		}
 	}
 
@@ -60,6 +60,5 @@ const solution = (n, m, arr) => {
 console.time('걸린 시간');
 // const log = solution(5, 3, [1, 2, 8, 4, 9]);
 const log = solution(4, 2, [0, 2, 5, 10]);
-
 console.log(JSON.stringify(log));
 console.timeEnd('걸린 시간');
