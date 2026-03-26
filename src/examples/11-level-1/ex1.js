@@ -1,5 +1,6 @@
 /**
  * 최대공약수와 최소공배수
+ * 유클리드 알고리즘 활용
  * https://school.programmers.co.kr/learn/courses/30/lessons/12940
  *
  * ▣ 입력예제 1
@@ -12,7 +13,7 @@
  * ▣ 출력예제 2
  * [1, 10]
  */
-// 유클리드 알고리즘 활용
+
 // 최대 공약수
 function gcd(a, b) {
 	while (b !== 0) {
@@ -29,10 +30,15 @@ function lcm(a, b, c) {
 	return (a * b) / c;
 }
 
-export default function solution(n, m) {
+function solution(n, m) {
 	const divisor = gcd(n, m);
 	const multiple = lcm(n, m, divisor);
 	const answer = [divisor, multiple];
 
 	return answer;
 }
+
+console.time('걸린 시간');
+const log = solution([]);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));

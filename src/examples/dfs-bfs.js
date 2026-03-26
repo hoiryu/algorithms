@@ -7,7 +7,7 @@
  * ▣ 출력예제 1
  * [[1, 2, 3],[1, 2],[1, 3],[1],[2, 3],[2],[3],[]]
  */
-export function subset(arr) {
+const subset = arr => {
 	const n = arr.length;
 	const result = [];
 	const stack = [{ index: 0, chosen: [] }];
@@ -25,7 +25,7 @@ export function subset(arr) {
 	}
 
 	return result;
-}
+};
 
 /**
  * DFS
@@ -36,7 +36,7 @@ export function subset(arr) {
  * ▣ 출력예제 1
  * [[ 0, 0 ], [ 0, 1 ], [ 0, 2 ], [ 1, 0 ], [ 1, 1 ], [ 1, 2 ], [ 2, 0 ], [ 2, 1 ], [ 2, 2 ]]
  */
-export function permutationWithRepetition(n, m) {
+function permutationWithRepetition(n, m) {
 	const result = [];
 	const stack = [{ chosen: [] }];
 
@@ -64,7 +64,7 @@ export function permutationWithRepetition(n, m) {
  * ▣ 출력예제 1
  * [[0, 1], [0, 2], [1, 0], [1, 2], [2, 0], [2, 1]]
  */
-export function permutation(n, m) {
+function permutation(n, m) {
 	const result = [];
 	const stack = [{ chosen: [], checked: Array.from({ length: n }).fill(false) }];
 
@@ -96,7 +96,7 @@ export function permutation(n, m) {
  * ▣ 출력예제 1
  * [[1,2,3],[1,2,4],[1,2,5],[1,3,4],[1,3,5],[1,4,5],[2,3,4],[2,3,5],[2,4,5],[3,4,5]]
  */
-export function combination(n, m) {
+function combination(n, m) {
 	const result = [];
 	const stack = [{ start: 1, chosen: [] }];
 
