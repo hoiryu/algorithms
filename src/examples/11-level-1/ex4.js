@@ -1,80 +1,56 @@
 /**
  * 동영상 재생기
- * 당신은 동영상 재생기를 만들고 있습니다. 당신의 동영상 재생기는 10초 전으로 이동, 10초 후로 이동, 오프닝 건너뛰기 3가지 기능을 지원합니다.
- * 각 기능이 수행하는 작업은 다음과 같습니다.
- *
- * 10초 전으로 이동: 사용자가 "prev" 명령을 입력할 경우 동영상의 재생 위치를 현재 위치에서 10초 전으로 이동합니다
- * 현재 위치가 10초 미만인 경우 영상의 처음 위치로 이동합니다. 영상의 처음 위치는 0분 0초입니다.
- * 10초 후로 이동: 사용자가 "next" 명령을 입력할 경우 동영상의 재생 위치를 현재 위치에서 10초 후로 이동합니다.
- * 동영상의 남은 시간이 10초 미만일 경우 영상의 마지막 위치로 이동합니다. 영상의 마지막 위치는 동영상의 길이와 같습니다.
- * 오프닝 건너뛰기: 현재 재생 위치가 오프닝 구간(op_start ≤ 현재 재생 위치 ≤ op_end)인 경우 자동으로 오프닝이 끝나는 위치로 이동합니다.
- * 동영상의 길이를 나타내는 문자열 video_len, 기능이 수행되기 직전의 재생위치를 나타내는 문자열 pos,
- * 오프닝 시작 시각을 나타내는 문자열 op_start, 오프닝이 끝나는 시각을 나타내는 문자열 op_end,
- * 사용자의 입력을 나타내는 1차원 문자열 배열 commands가 매개변수로 주어집니다.
- * 이때 사용자의 입력이 모두 끝난 후 동영상의 위치를 "mm:ss" 형식으로 return 하도록 solution 함수를 완성해 주세요.
- *
- * 제한사항
- * video_len의 길이 = pos의 길이 = op_start의 길이 = op_end의 길이 = 5
- * video_len, pos, op_start, op_end는 "mm:ss" 형식으로 mm분 ss초를 나타냅니다.
- * 0 ≤ mm ≤ 59
- * 0 ≤ ss ≤ 59
- * 분, 초가 한 자리일 경우 0을 붙여 두 자리로 나타냅니다.
- * 비디오의 현재 위치 혹은 오프닝이 끝나는 시각이 동영상의 범위 밖인 경우는 주어지지 않습니다.
- * 오프닝이 시작하는 시각은 항상 오프닝이 끝나는 시각보다 전입니다.
- * 1 ≤ commands의 길이 ≤ 100
- * commands의 원소는 "prev" 혹은 "next"입니다.
- * "prev"는 10초 전으로 이동하는 명령입니다.
- * "next"는 10초 후로 이동하는 명령입니다.
- *
- * ▣ 입력예제 1
- * "10:55", "00:16", "00:15", "00:17", ["prev"]
- * ▣ 출력예제 1
- * "00:07"
- *
- * ▣ 입력예제 2
- * "30:00", "01:05", "01:00", "01:30", ["prev"]
- * ▣ 출력예제 2
- * "01:30"
- *
- * ▣ 입력예제 3
- * 입력값 "30:00", "00:08", "00:00", "00:05", ["prev"]
- * ▣ 출력예제 3
- * 기댓값 "00:05"
+ * https://school.programmers.co.kr/learn/courses/30/lessons/340213
  */
-const timeToSeconds = t =>
-	t
-		.split(':')
-		.map((i, idx) => (idx === 0 ? Number(i) * 60 : Number(i)))
-		.reduce((acc, curr) => acc + curr);
-const timeToString = t => (t <= 9 ? `0${String(t)}` : String(t));
-const secondToTime = t => {
-	const minutes = Math.floor(t / 60);
-	const seconds = t % 60;
-	return `${timeToString(minutes)}:${timeToString(seconds)}`;
+const zeroPaddedFormat = t => (t < 10 ? `0${t}` : t);
+
+const stringToSeconds = str => {
+	const arr = str.split(':').map(str => Number(str));
+	return arr[0] * 60 + arr[1];
 };
 
-export default function solution(video_len, pos, op_start, op_end, commands) {
-	video_len = timeToSeconds(video_len);
-	pos = timeToSeconds(pos);
-	op_start = timeToSeconds(op_start);
-	op_end = timeToSeconds(op_end);
+const secondsToString = num => {
+	const hours = Math.floor(num / 60);
+	const minutes = num % 60;
+	return `${zeroPaddedFormat(hours)}:${zeroPaddedFormat(minutes)}`;
+};
 
-	let answer = '',
-		currentPos = pos;
+const solution = (video_len, pos, op_start, op_end, commands) => {
+	video_len = stringToSeconds(video_len);
+	pos = stringToSeconds(pos);
+	op_start = stringToSeconds(op_start);
+	op_end = stringToSeconds(op_end);
 
-	if (currentPos >= op_start && currentPos <= op_end) currentPos = op_end;
+	for (const command of commands) {
+		if (pos >= op_start && pos < op_end) pos = op_end;
 
-	for (let command of commands) {
-		if (command === 'next') {
-			currentPos = Math.min(video_len, currentPos + 10);
-		} else {
-			currentPos = Math.max(0, currentPos - 10);
-		}
+		pos += command === 'next' ? 10 : -10;
 
-		if (currentPos <= op_end && currentPos >= op_start) currentPos = op_end;
+		if (pos > video_len) pos = video_len;
+		else if (pos < 0) pos = 0;
+
+		if (pos >= op_start && pos < op_end) pos = op_end;
 	}
 
-	answer = secondToTime(currentPos);
+	return secondsToString(pos);
+};
 
-	return answer;
-}
+console.time('걸린 시간');
+/**
+ * "13:00"
+ */
+// const log = solution('34:33', '13:00', '00:55', '02:55', ['next', 'prev']);
+/**
+ * "00:05"
+ */
+const log = solution('30:00', '00:08', '00:00', '00:05', ['prev']);
+/**
+ * "06:55"
+ */
+// const log = solution('10:55', '00:05', '00:15', '06:55', ['prev', 'next', 'next']);
+/**
+ * "04:17"
+ */
+// const log = solution('07:22', '04:05', '00:15', '04:07', ['next']);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));
