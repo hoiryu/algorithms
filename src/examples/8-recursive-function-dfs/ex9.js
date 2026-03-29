@@ -14,52 +14,36 @@
  * 3
  * 설명 : 5 5 5 동전 3개로 거슬러 줄 수 있다.
  */
-function dfs(arr, m) {
-	let result = Infinity;
-	const n = arr.length;
+
+const solution = (n, arr, m) => {
+	let answer = Number.MAX_SAFE_INTEGER;
+	const depth = n;
 	const stack = [{ sum: 0, count: 0 }];
 	const visited = new Set();
 
 	while (stack.length) {
 		const { sum, count } = stack.pop();
 		const key = `${sum}-${count}`;
+
 		if (visited.has(key)) continue;
 		else visited.add(key);
 
-		if (count > result || sum > m) continue;
+		if (sum > m || count > answer) continue;
+
 		if (sum === m) {
-			result = Math.min(result, count);
+			answer = Math.min(answer, count);
 			continue;
 		}
 
-		for (let i = n - 1; i >= 0; i--) {
+		for (let i = 0; i < depth; i++) {
 			stack.push({ sum: sum + arr[i], count: count + 1 });
 		}
 	}
 
-	return result;
-}
-
-export default function solution(n, arr, m) {
-	const answer = dfs(arr, m);
-
 	return answer;
-}
+};
 
-// 재귀
-// export default function solution(n, arr, m) {
-// 	let answer = Number.MAX_SAFE_INTEGER;
-
-// 	function dfs(l, sum) {
-// 		if (sum > m || answer <= l) return;
-// 		if (sum === m) return (answer = Math.min(answer, l));
-
-// 		for (let i = 0; i < n; i++) {
-// 			dfs(l + 1, sum + arr[i]);
-// 		}
-// 	}
-
-// 	dfs(0, 0);
-
-// 	return answer;
-// }
+console.time('걸린 시간');
+const log = solution(3, [1, 2, 5], 15);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));
