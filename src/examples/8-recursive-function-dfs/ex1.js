@@ -16,8 +16,13 @@ function dfs(arr, n) {
 	arr.push(n);
 }
 
-export default function solution(n) {
+const solution = n => {
 	const answer = [];
 	dfs(answer, n);
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution(3);
+console.log(JSON.stringify(log));
+console.timeEnd('걸린 시간');

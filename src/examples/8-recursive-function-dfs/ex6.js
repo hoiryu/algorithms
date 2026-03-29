@@ -1,6 +1,6 @@
 /**
- * Subset
- * 바둑이 승차(DFS)
+ * Subset + DFS
+ * 바둑이 승차
  * 철수는 그의 바둑이들을 데리고 시장에 가려고 한다. 그런데 그의 트럭은 C킬로그램 넘게 태
  * 울수가 없다. 철수는 C를 넘지 않으면서 그의 바둑이들을 가장 무겁게 태우고 싶다.
  * N마리의 바둑이와 각 바둑이의 무게 W가 주어지면, 철수가 트럭에 태울 수 있는 가장 무거운
@@ -16,7 +16,7 @@
  * ▣ 출력예제 1
  * 242
  */
-function dfs(c, arr) {
+const dfs = (c, arr) => {
 	let result = -Infinity;
 	const n = arr.length;
 	const stack = [{ index: 0, sum: 0 }];
@@ -35,12 +35,17 @@ function dfs(c, arr) {
 	}
 
 	return result;
-}
+};
 
-export default function solution(c, arr) {
-	let answer = dfs(c, arr);
+const solution = (c, arr) => {
+	const answer = dfs(c, arr);
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution(259, [81, 58, 42, 33, 61]);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));
 
 // 재귀
 // export default function solution(c, n, arr) {

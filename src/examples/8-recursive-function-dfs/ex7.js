@@ -1,4 +1,5 @@
 /**
+ * Subset + DFS
  * 최대점수 구하기(DFS)
  * 이번 정보올림피아드대회에서 좋은 성적을 내기 위하여 현수는 선생님이 주신 N개의 문제를
  * 풀려고 합니다. 각 문제는 그것을 풀었을 때 얻는 점수와 푸는데 걸리는 시간이 주어지게 됩
@@ -14,18 +15,17 @@
  * ▣ 출력예제 1
  * 41
  */
-
-function dfs(m, arr) {
-	let result = -Infinity;
-	const n = arr.length;
+const solution = (n, m, arr) => {
+	let answer = 0;
+	const depth = n;
 	const stack = [{ index: 0, point: 0, time: 0 }];
 
 	while (stack.length) {
 		const { index, point, time } = stack.pop();
-
 		if (time > m) continue;
-		if (index === n) {
-			result = Math.max(result, point);
+
+		if (index === depth) {
+			answer = Math.max(answer, point);
 			continue;
 		}
 
@@ -33,25 +33,16 @@ function dfs(m, arr) {
 		stack.push({ index: index + 1, point: point + arr[index][0], time: time + arr[index][1] });
 	}
 
-	return result;
-}
-
-export default function solution(n, m, arr) {
-	const answer = dfs(m, arr);
 	return answer;
-}
+};
 
-// export default function solution(n, m, arr) {
-// 	let answer = Number.MIN_SAFE_INTEGER;
-
-// 	function dfs(l, score, time) {
-// 		if (time > m) return;
-// 		if (l === n) return (answer = Math.max(answer, score));
-
-// 		dfs(l + 1, score + arr[l][0], time + arr[l][1]);
-// 		dfs(l + 1, score, time);
-// 	}
-
-// 	dfs(0, 0, 0);
-// 	return answer;
-// }
+console.time('걸린 시간');
+const log = solution(5, 20, [
+	[10, 5],
+	[25, 12],
+	[15, 8],
+	[6, 3],
+	[7, 4],
+]);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));

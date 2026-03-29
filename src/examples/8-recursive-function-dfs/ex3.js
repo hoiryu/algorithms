@@ -11,7 +11,7 @@
  *
  * 후위순회 출력 : 4 5 2 6 7 3 1
  */
-function dfs(a, n) {
+const dfs = (a, n) => {
 	if (n > 7) return;
 
 	// a[0].push(n);
@@ -19,10 +19,15 @@ function dfs(a, n) {
 	// a[1].push(n);
 	dfs(a, n * 2 + 1);
 	a[2].push(n);
-}
+};
 
-export default function solution(n) {
+const solution = n => {
 	let answer = [[], [], []];
 	dfs(answer, n);
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution(7);
+console.log(JSON.stringify(log));
+console.timeEnd('걸린 시간');

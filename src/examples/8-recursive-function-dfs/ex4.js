@@ -20,29 +20,53 @@
  * 2
  * 3
  */
-export default function solution(n) {
-	let answer = [];
-	const checks = Array(n + 1).fill(0);
+const solution = n => {
+	const answer = [];
+	const stack = [{ index: 0, chosen: [] }];
 
-	function dfs(l) {
-		if (l === n + 1) {
-			const t = [];
-			for (let i = 1; i <= checks.length; i++) {
-				if (checks[i] === 0) continue;
-				t.push(i);
-			}
-			if (t.length > 0) answer.push(t);
+	while (stack.length) {
+		const { index, chosen } = stack.pop();
 
-			return;
+		if (index === n) {
+			if (chosen.length) answer.push(chosen.slice());
+			continue;
 		}
 
-		checks[l] = 1;
-		dfs(l + 1);
-		checks[l] = 0;
-		dfs(l + 1);
+		stack.push({ index: index + 1, chosen });
+		stack.push({ index: index + 1, chosen: chosen.concat(index + 1) });
 	}
 
-	dfs(1);
-
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution(3);
+console.log(JSON.stringify(log));
+console.timeEnd('걸린 시간');
+
+// export default function solution(n) {
+// 	let answer = [];
+// 	const checks = Array(n + 1).fill(0);
+
+// 	function dfs(l) {
+// 		if (l === n + 1) {
+// 			const t = [];
+// 			for (let i = 1; i <= checks.length; i++) {
+// 				if (checks[i] === 0) continue;
+// 				t.push(i);
+// 			}
+// 			if (t.length > 0) answer.push(t);
+
+// 			return;
+// 		}
+
+// 		checks[l] = 1;
+// 		dfs(l + 1);
+// 		checks[l] = 0;
+// 		dfs(l + 1);
+// 	}
+
+// 	dfs(1);
+
+// 	return answer;
+// }

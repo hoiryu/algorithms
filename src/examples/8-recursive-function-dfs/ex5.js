@@ -1,6 +1,5 @@
 /**
- * 부분 집합
- * DFS (Depth-First-Search)
+ * Subset + DFS
  * 합이 같은 부분집합 (아마존 인터뷰)
  * N개의 원소로 구성된 자연수 집합이 주어지면, 이 집합을 두 개의 부분집합으로 나누었을 때
  * 두 부분집합의 원소의 합이 서로 같은 경우가 존재하면 “YES"를 출력하고, 그렇지 않으면
@@ -20,37 +19,33 @@
  * ▣ 출력예제 1
  * YES
  */
-
-export default function solution(arr) {
+const solution = arr => {
 	let answer = 'NO';
-	const n = arr.length;
+	const depth = arr.length;
 	const visited = new Set();
-	const stack = [{ index: 0, chosen: [], a: 0, b: 0 }];
+	const stack = [{ index: 0, a: 0, b: 0 }];
 
 	while (stack.length) {
-		const { index, chosen, a, b } = stack.pop();
-
-		if (index === n) {
+		const { index, a, b } = stack.pop();
+		if (index === depth) {
 			if (a === b) {
-				answer = 'YES';
-				console.log(chosen);
-				break;
+				return 'YES';
 			}
+
 			continue;
 		}
-
 		const key = `${index}-${a}-${b}`;
 		if (visited.has(key)) continue;
 		else visited.add(key);
 
-		stack.push({ index: index + 1, chosen, a: a + arr[index], b });
-		stack.push({
-			index: index + 1,
-			chosen: chosen.slice().concat(arr[index]),
-			a,
-			b: b + arr[index],
-		});
+		stack.push({ index: index + 1, a: a + arr[index], b });
+		stack.push({ index: index + 1, a, b: b + arr[index] });
 	}
 
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution([1, 3, 5, 6, 7, 10]);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));

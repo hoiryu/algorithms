@@ -21,16 +21,14 @@ const subset = arr => {
 		}
 
 		stack.push({ index: index + 1, chosen });
-		stack.push({ index: index + 1, chosen: chosen.slice().concat(arr[index]) });
+		stack.push({ index: index + 1, chosen: chosen.concat(arr[index]) });
 	}
 
 	return result;
 };
 
 /**
- * DFS
  * Permutation with repetition 중복 순열
- *
  * ▣ 입력예제 1
  * 3, 2
  * ▣ 출력예제 1
@@ -49,7 +47,7 @@ function permutationWithRepetition(n, m) {
 		}
 
 		for (let i = n - 1; i >= 0; i--) {
-			stack.push({ chosen: chosen.slice().concat(i) });
+			stack.push({ chosen: chosen.concat(i) });
 		}
 	}
 	return result;
@@ -80,7 +78,7 @@ function permutation(n, m) {
 			if (checked[i]) continue;
 			const newChecked = checked.slice();
 			newChecked[i] = true;
-			stack.push({ chosen: chosen.slice().concat(i), checked: newChecked });
+			stack.push({ chosen: chosen.concat(i), checked: newChecked });
 		}
 	}
 
@@ -109,7 +107,7 @@ function combination(n, m) {
 		}
 
 		for (let i = n; i >= start; i--) {
-			stack.push({ start: i + 1, chosen: chosen.slice().concat(i) });
+			stack.push({ start: i + 1, chosen: chosen.concat(i) });
 		}
 	}
 

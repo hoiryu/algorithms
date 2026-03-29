@@ -13,7 +13,7 @@
  * 1011
  */
 
-export default function solution(n) {
+const solution = n => {
 	let answer = [];
 
 	while (n > 0) {
@@ -22,4 +22,9 @@ export default function solution(n) {
 	}
 
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution(11);
+console.log(JSON.stringify(log));
+console.timeEnd('걸린 시간');
