@@ -1,4 +1,5 @@
 /**
+ * Permutation with repetition + DFS
  * 동전교환
  * 다음과 같이 여러 단위의 동전들이 주어져 있을때 거스름돈을 가장 적은 수의 동전으로 교환
  * 해주려면 어떻게 주면 되는가? 각 단위의 동전은 무한정 쓸 수 있다.
@@ -14,7 +15,6 @@
  * 3
  * 설명 : 5 5 5 동전 3개로 거슬러 줄 수 있다.
  */
-
 const solution = (n, arr, m) => {
 	let answer = Number.MAX_SAFE_INTEGER;
 	const depth = n;

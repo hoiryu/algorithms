@@ -15,13 +15,17 @@
  * 120
  */
 export default function solution(n) {
-	const answer = dfs(n);
+	let answer = 1;
+	let depth = n;
 
-	function dfs(l) {
-		if (l === 1) return 1;
-
-		return l * dfs(l - 1);
+	while (depth > 1) {
+		answer *= depth--;
 	}
 
 	return answer;
 }
+
+console.time('걸린 시간');
+const log = solution(5);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));
