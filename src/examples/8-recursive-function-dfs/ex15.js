@@ -1,4 +1,5 @@
 /**
+ * Combination + DFS
  * 수들의 조합
  * N개의 정수가 주어지면 그 숫자들 중 K개를 뽑는 조합의 합이 임의의 정수 M의 배수인 개수
  * 는 몇 개가 있는지 출력하는 프로그램을 작성하세요.
@@ -11,30 +12,35 @@
  * ▣ 출력설명
  * 총 가지수를 출력합니다.
  * ▣ 입력예제 1
- * 5 3
- * 2 4 5 8 12
- * 6
+ * 5, 3, [2, 4, 5, 8, 12], 6
  * ▣ 출력예제 1
  * 2
  */
-export default function solution(n, k, arr, m) {
-	let answer = 0;
-	const t = Array(k).fill(0);
+const solution = (n, k, arr, m) => {
+	const answer = [];
+	const stack = [{ start: 0, chosen: [] }];
 
-	function dfs(l, s, sum) {
-		if (l === k) {
-			if (sum % m === 0) answer++;
-			console.log(t);
-			return;
+	while (stack.length) {
+		const { start, chosen } = stack.pop();
+
+		if (chosen.length === k) {
+			const sum = chosen.reduce((acc, curr) => acc + curr, 0);
+			if (sum % m !== 0) continue;
+
+			answer.push(chosen);
+
+			continue;
 		}
 
-		for (let i = s; i < n; i++) {
-			t[l] = i;
-			dfs(l + 1, i + 1, sum + arr[i]);
+		for (let i = start; i < n; i++) {
+			stack.push({ start: i + 1, chosen: chosen.concat(arr[i]) });
 		}
 	}
 
-	dfs(0, 0, 0);
-
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution(5, 3, [2, 4, 5, 8, 12], 6);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));

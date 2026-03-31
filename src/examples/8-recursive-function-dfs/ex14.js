@@ -1,5 +1,6 @@
 /**
- * 조합 구하기
+ * Combination + DFS
+ * 조합수 구하기
  * 1부터 N까지 번호가 적힌 구슬이 있습니다. 이 중 M개를 뽑는 방법의 수를 출력하는 프로그
  * 램을 작성하세요.
  * ▣ 입력설명
@@ -8,7 +9,7 @@
  * 첫 번째 줄에 결과를 출력합니다. 맨 마지막 총 경우의 수를 출력합니다.
  * 출력순서는 사전순으로 오름차순으로 출력합니다.
  * ▣ 입력예제 1
- * 4 2
+ * 4, 2
  * ▣ 출력예제 1
  * 1 2
  * 1 3
@@ -18,24 +19,30 @@
  * 3 4
  * 6
  */
-export default function solution(n, m) {
+const solution = (n, m) => {
 	let answer = [];
-	const t = Array(m).fill(0);
-	const checks = Array(n + 1).fill(0);
+	const stack = [{ start: 1, chosen: [] }];
 
-	function dfs(l, s) {
-		if (l === m) return answer.push([...t]);
+	while (stack.length) {
+		const { start, chosen } = stack.pop();
 
-		for (let i = s; i <= n; i++) {
-			if (checks[i] === 1) continue;
-			t[l] = i;
-			checks[i] = 1;
-			dfs(l + 1, i + 1);
-			checks[i] = 0;
+		if (chosen.length === m) {
+			answer.unshift(chosen);
+			continue;
+		}
+
+		for (let i = start; i <= n; i++) {
+			stack.push({
+				start: i + 1,
+				chosen: chosen.concat(i),
+			});
 		}
 	}
 
-	dfs(0, 1);
-
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution(4, 2);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));
