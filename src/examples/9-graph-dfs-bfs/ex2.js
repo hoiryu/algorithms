@@ -30,37 +30,43 @@
  * ▣ 출력예제 1
  * 6
  */
-export default function solution(n, m, arr) {
-	let answer = 0;
+const solution = (n, m, arr) => {
+	let answer = [];
+
 	const graph = Array.from({ length: n + 1 }, () => []);
-	const checks = Array(n + 1).fill(0);
-	const t = [];
 
-	for (let [r, c] of arr) graph[r].push(c);
+	for (const [r, c] of arr) graph[r].push(c);
 
-	function dfs(l) {
-		if (l === n) {
-			answer++;
-			console.log([...t]);
-			return;
+	const stack = [{ vertex: arr[0][0], chosen: new Set([arr[0][0]]) }];
+
+	while (stack.length) {
+		const { vertex, chosen } = stack.pop();
+
+		if (vertex === n) {
+			answer.unshift([...chosen]);
+			continue;
 		}
 
-		for (let i = 0; i < graph[l].length; i++) {
-			const v = graph[l][i];
-			if (checks[v] === 1) continue;
-
-			checks[v] = 1;
-			t.push(v);
-			dfs(v);
-			checks[v] = 0;
-			t.pop();
+		for (const nv of graph[vertex]) {
+			if (chosen.has(nv)) continue;
+			stack.push({ vertex: nv, chosen: new Set([...chosen, nv]) });
 		}
 	}
 
-	checks[1] = 1;
-	t.push(1);
-
-	dfs(1);
-
 	return answer;
-}
+};
+
+console.time('걸린 시간');
+const log = solution(5, 9, [
+	[1, 2],
+	[1, 3],
+	[1, 4],
+	[2, 1],
+	[2, 3],
+	[2, 5],
+	[3, 4],
+	[4, 2],
+	[4, 5],
+]);
+console.timeEnd('걸린 시간');
+console.log(JSON.stringify(log));
