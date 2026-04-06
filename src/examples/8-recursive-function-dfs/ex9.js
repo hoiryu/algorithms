@@ -35,7 +35,7 @@ const solution = (n, arr, m) => {
 			continue;
 		}
 
-		for (let i = 0; i < depth; i++) {
+		for (let i = depth; i >= 0; i++) {
 			stack.push({ sum: sum + arr[i], count: count + 1 });
 		}
 	}

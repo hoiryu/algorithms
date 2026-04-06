@@ -21,11 +21,11 @@ const solution = (n, m) => {
 		const { chosen } = stack.pop();
 
 		if (chosen.length === m) {
-			answer.unshift(chosen.slice());
+			answer.push(chosen.slice());
 			continue;
 		}
 
-		for (let i = 1; i <= n; i++) {
+		for (let i = n; i > 0; i--) {
 			stack.push({ chosen: chosen.concat(i) });
 		}
 	}

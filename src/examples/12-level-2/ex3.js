@@ -34,8 +34,7 @@ function bfs(r, c, storage) {
 
 			const key = `${nr}-${nc}`;
 
-			if (nr < 0 || nr >= n || nc < 0 || nc >= m || storage[nr][nc] !== 0 || visited.has(key))
-				continue;
+			if (nr < 0 || nr >= n || nc < 0 || nc >= m || storage[nr][nc] !== 0 || visited.has(key)) continue;
 
 			visited.add(key);
 			queue.push([nr, nc]);
