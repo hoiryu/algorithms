@@ -1,40 +1,34 @@
+import { test } from '../../console.js';
+
 /**
  * BFS
  * 지게차와 크레인
  * https://school.programmers.co.kr/learn/courses/30/lessons/388353
- *
- * ▣ 입력예제 1
- * ["AZWQY", "CAABX", "BBDDA", "ACACA"],
- * ["A", "BB", "A"]
- * ▣ 출력예제 1
- * 11
- *
- * ▣ 입력예제 2
- * ["HAH", "HBH", "HHH", "HAH", "HBH"],
- * ["C", "B", "B", "B", "B", "H"]
- * ▣ 출력예제 2
- * 4
  */
-function bfs(r, c, storage) {
-	const n = storage.length;
-	const m = storage[0].length;
-	const dr = [-1, 0, 1, 0];
-	const dc = [0, 1, 0, -1];
-	let queue = [[r, c]];
-	const visited = new Set();
-	visited.add(`${r}-${c}`);
+const bfs = (sr, sc, storage) => {
+	const mr = storage.length;
+	const mc = storage[0].length;
+	const visited = new Set([`${sr}-${sc}`]);
+	const queue = [[sr, sc]];
+	const directions = [
+		[-1, 0],
+		[0, 1],
+		[1, 0],
+		[0, -1],
+	];
 
 	while (queue.length) {
 		const [cr, cc] = queue.shift();
 
-		for (let i = 0; i < dr.length; i++) {
-			const nr = cr + dr[i];
-			const nc = cc + dc[i];
-			if (nr < 0 || nr >= n || nc < 0 || nc >= m) return true;
+		for (const [dr, dc] of directions) {
+			const nr = cr + dr;
+			const nc = cc + dc;
+
+			if (nr < 0 || nr >= mr || nc < 0 || nc >= mc) return true;
 
 			const key = `${nr}-${nc}`;
 
-			if (nr < 0 || nr >= n || nc < 0 || nc >= m || storage[nr][nc] !== 0 || visited.has(key)) continue;
+			if (visited.has(key) || storage[nr][nc]) continue;
 
 			visited.add(key);
 			queue.push([nr, nc]);
@@ -42,32 +36,52 @@ function bfs(r, c, storage) {
 	}
 
 	return false;
-}
+};
 
-export default function solution(storage, requests) {
-	storage = storage.map(s => s.split(''));
-	const n = storage.length;
-	const m = storage[0].length;
-	let answer = n * m;
+const solution = (storage, requests) => {
+	storage = storage.map(row => row.split(''));
+
+	const mr = storage.length;
+	const mc = storage[0].length;
+	let answer = mr * mc;
+	const t = [];
 
 	for (const request of requests) {
-		const t = [];
+		for (let r = 0; r < mr; r++) {
+			for (let c = 0; c < mc; c++) {
+				if (storage[r][c] !== request[0]) continue;
 
-		for (let i = 0; i < n; i++) {
-			for (let j = 0; j < m; j++) {
-				if (storage[i][j] !== request[0]) continue;
-				if (request.length === 2) t.push([i, j]);
-				else {
-					if (bfs(i, j, storage)) t.push([i, j]);
-				}
+				if (request.length === 1) {
+					if (bfs(r, c, storage)) t.push([r, c]);
+				} else t.push([r, c]);
 			}
 		}
 
-		for (const [r, c] of t) {
-			storage[r][c] = 0;
+		while (t.length) {
+			const [r, c] = t.shift();
+
 			answer--;
+			storage[r][c] = 0;
 		}
 	}
 
+	console.log(JSON.stringify(storage));
 	return answer;
-}
+};
+
+test(solution, [
+	{
+		input: [
+			['AZWQY', 'CAABX', 'BBDDA', 'ACACA'],
+			['A', 'BB', 'A'],
+		],
+		expected: 11,
+	},
+	{
+		input: [
+			['HAH', 'HBH', 'HHH', 'HAH', 'HBH'],
+			['C', 'B', 'B', 'B', 'B', 'H'],
+		],
+		expected: 4,
+	},
+]);

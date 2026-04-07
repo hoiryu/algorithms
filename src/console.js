@@ -4,9 +4,13 @@ export const test = (f, cases) => {
 	cases.forEach(({ input, expected }, i) => {
 		const args = Array.isArray(input) ? input : [input];
 
-		console.time(`[${i + 1}] 걸린 시간`);
+		const start = performance.now();
+
 		const result = f(...args);
-		console.timeEnd(`[${i + 1}] 걸린 시간`);
+
+		const end = performance.now();
+
+		console.log(`[${i + 1}] 걸린 시간: ${(end - start).toFixed(3)}ms`);
 
 		const passed = JSON.stringify(result) === JSON.stringify(expected);
 
@@ -14,6 +18,7 @@ export const test = (f, cases) => {
 
 		if (!passed) {
 			console.log(`Expected: ${JSON.stringify(expected)}`);
+
 			console.log(`Received: ${JSON.stringify(result)}`);
 		}
 	});
