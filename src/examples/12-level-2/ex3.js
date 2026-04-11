@@ -6,29 +6,28 @@ import { test } from '../../console.js';
  * https://school.programmers.co.kr/learn/courses/30/lessons/388353
  */
 const bfs = (sr, sc, storage) => {
+	const queue = [[sr, sc]];
 	const mr = storage.length;
 	const mc = storage[0].length;
-	const visited = new Set([`${sr}-${sc}`]);
-	const queue = [[sr, sc]];
-	const directions = [
-		[-1, 0],
-		[0, 1],
-		[1, 0],
+	const ds = [
 		[0, -1],
+		[1, 0],
+		[0, 1],
+		[-1, 0],
 	];
+	const visited = new Set([`${sr}-${sc}`]);
 
 	while (queue.length) {
 		const [cr, cc] = queue.shift();
 
-		for (const [dr, dc] of directions) {
+		for (const [dr, dc] of ds) {
 			const nr = cr + dr;
 			const nc = cc + dc;
 
 			if (nr < 0 || nr >= mr || nc < 0 || nc >= mc) return true;
 
 			const key = `${nr}-${nc}`;
-
-			if (visited.has(key) || storage[nr][nc]) continue;
+			if (visited.has(key) || storage[nr][nc] !== 0) continue;
 
 			visited.add(key);
 			queue.push([nr, nc]);
@@ -39,33 +38,32 @@ const bfs = (sr, sc, storage) => {
 };
 
 const solution = (storage, requests) => {
-	storage = storage.map(row => row.split(''));
-
+	storage = storage.map(s => s.split(''));
 	const mr = storage.length;
 	const mc = storage[0].length;
 	let answer = mr * mc;
-	const t = [];
 
 	for (const request of requests) {
+		const t = [];
+
 		for (let r = 0; r < mr; r++) {
 			for (let c = 0; c < mc; c++) {
 				if (storage[r][c] !== request[0]) continue;
 
-				if (request.length === 1) {
-					if (bfs(r, c, storage)) t.push([r, c]);
-				} else t.push([r, c]);
+				if (request.length === 1 && !bfs(r, c, storage)) continue;
+
+				t.push([r, c]);
 			}
 		}
 
 		while (t.length) {
 			const [r, c] = t.shift();
 
-			answer--;
 			storage[r][c] = 0;
+			answer--;
 		}
 	}
 
-	console.log(JSON.stringify(storage));
 	return answer;
 };
 

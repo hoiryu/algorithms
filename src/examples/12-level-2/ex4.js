@@ -1,67 +1,80 @@
+import { test } from '../../console.js';
+
 /**
  * DFS 조합수
  * 비밀 코드 해독
  * https://school.programmers.co.kr/learn/courses/30/lessons/388352
- *
- * ▣ 입력예제 1
- * 10,
- * [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [3, 7, 8, 9, 10], [2, 5, 7, 9, 10], [3, 4, 5, 6, 7]],
- * [2, 3, 4, 3, 3]
- * ▣ 출력예제 1
- * 3
- *
- * ▣ 입력예제 2
- * 15,
- * [[2, 3, 9, 12, 13], [1, 4, 6, 7, 9], [1, 2, 8, 10, 12], [6, 7, 11, 13, 15], [1, 4, 10, 11, 14]],
- * [2, 1, 3, 0, 1]
- * ▣ 출력예제 2
- * 5
  */
-function secretCheck(arr, q, ans) {
-	let result = true;
+const compare = (chosen, q, ans) => {
+	const mr = q.length;
+	const mc = q[0].length;
 
-	for (let i = 0; i < q.length; i++) {
+	for (let r = 0; r < mr; r++) {
 		let count = 0;
 
-		for (let j = 0; j < arr.length; j++) {
-			if (q[i].includes(arr[j])) count++;
+		for (let c = 0; c < mc; c++) {
+			if (chosen.includes(q[r][c])) count++;
 		}
 
-		if (count !== ans[i]) return false;
+		if (count !== ans[r]) return false;
 	}
 
-	return result;
-}
+	return true;
+};
 
-function dfs(n, m, q, ans) {
+const combination = (n, q, ans) => {
 	let result = 0;
+	const picked = 5;
 	const stack = [{ start: 1, chosen: [] }];
-	const visited = new Set();
 
 	while (stack.length) {
 		const { start, chosen } = stack.pop();
-		const key = `${start}-${chosen.join('-')}`;
 
-		if (visited.has(key)) continue;
-		else visited.add(key);
-
-		if (chosen.length === m) {
-			if (secretCheck(chosen, q, ans)) result++;
+		if (chosen.length === picked) {
+			if (compare(chosen, q, ans)) result++;
 			continue;
 		}
 
 		for (let i = n; i >= start; i--) {
-			stack.push({ start: i + 1, chosen: chosen.slice().concat(i) });
+			stack.push({ start: i + 1, chosen: chosen.concat(i) });
 		}
 	}
 
 	return result;
-}
+};
 
-export default function solution(n, q, ans) {
-	let answer = 0;
-	const m = q[0].length;
-	answer = dfs(n, m, q, ans);
-
+const solution = (n, q, ans) => {
+	const answer = combination(n, q, ans);
 	return answer;
-}
+};
+
+test(solution, [
+	{
+		input: [
+			10,
+			[
+				[1, 2, 3, 4, 5],
+				[6, 7, 8, 9, 10],
+				[3, 7, 8, 9, 10],
+				[2, 5, 7, 9, 10],
+				[3, 4, 5, 6, 7],
+			],
+			[2, 3, 4, 3, 3],
+		],
+		expected: 3,
+	},
+	{
+		input: [
+			15,
+			[
+				[2, 3, 9, 12, 13],
+				[1, 4, 6, 7, 9],
+				[1, 2, 8, 10, 12],
+				[6, 7, 11, 13, 15],
+				[1, 4, 10, 11, 14],
+			],
+			[2, 1, 3, 0, 1],
+		],
+		expected: 5,
+	},
+]);
